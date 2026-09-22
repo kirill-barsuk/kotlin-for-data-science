@@ -2,11 +2,13 @@ package org.example
 
 import io.ktor.client.*
 import io.ktor.client.engine.java.*
-import io.ktor.client.plugins.contentnegotiation.*
+import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.request.*
+import io.ktor.client.call.*
 import io.ktor.serialization.kotlinx.json.*
 import kotlinx.coroutines.runBlocking
+import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-
 
 fun main(args: Array<String>) = runBlocking {
     val json = Json {
@@ -27,7 +29,14 @@ fun main(args: Array<String>) = runBlocking {
         println("First 10 records:")
         println("-".repeat(120))
 
-        records.take(10).forEachIndexed { index, record ->
+        val requestTypes = records.map { it.requestType }.toSet()
+        println("Request types: $requestTypes")
+
+        val legalTypes = setOf("GET", "DELETE", "POST", "PUT")
+        val anomalyTypes = requestTypes.filter { !legalTypes.contains(it) }.toSet()
+        println("Illegal request types: $anomalyTypes")
+
+        records.filter { anomalyTypes.contains(it.requestType) }.forEachIndexed { index, record ->
             println("\n[${index + 1}]")
             println("  ID:            ${record.id}")
             println("  Timestamp:     ${record.timestamp}")

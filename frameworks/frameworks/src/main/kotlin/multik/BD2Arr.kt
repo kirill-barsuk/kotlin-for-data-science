@@ -6,7 +6,7 @@ import org.jetbrains.kotlinx.multik.ndarray.data.get
 
 fun main() {
     val b = mk.d2array(2, 2){it}
-    //println(b)
+//    println(b)
 
-    println(b[1])
+    println(b[1][0])
 }

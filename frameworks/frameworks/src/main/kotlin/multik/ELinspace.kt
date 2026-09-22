@@ -3,6 +3,6 @@ package multik
 import org.jetbrains.kotlinx.multik.api.*
 
 fun main() {
-    val e = mk.linspace<Float>(-1, 1, 9)
+    val e = mk.linspace<Float>(0, 2, 13)
     println(e)
 }

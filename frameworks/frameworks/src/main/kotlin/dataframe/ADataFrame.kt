@@ -20,10 +20,10 @@ fun main() {
 //    println(df.filter { it["State"] == "COMPLETED" }.size())
 
     df = df.filter { it["State"] == "COMPLETED" }
-//    println(df.rowsCount())
+    println(df.rowsCount())
     df = df.filter { it["ElapsedRaw"] != null }
     df = df.filter { it["TimelimitRaw"] != null }
-//    println(df.rowsCount())
+    println(df.rowsCount())
 
     df = df.add("UtilFactor"){it["ElapsedRaw"].toString().toFloat() / it["TimelimitRaw"].toString().toFloat()}
     val groupByUser = df.groupBy("UserID").mean("UtilFactor")
